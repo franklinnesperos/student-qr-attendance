@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student QR Attendance & Auto-Sorter</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/html5-qrcode"></script>
+</head>
+<body>
+
+  <header>
+    <h1>School Attendance Gateway</h1>
+    <p>Live QR Scanner & Auto-Section Sorting System</p>
+  </header>
+
+  <main class="container">
+    <!-- Scanner Section -->
+    <section class="scanner-card">
+      <h2>Scan Student ID</h2>
+      <div id="reader"></div>
+      <div id="statusMessage" class="status-box">Ready to scan...</div>
+    </section>
+
+    <!-- Sorted Attendance Tables -->
+    <section class="dashboard-card">
+      <h2>Live Attendance Logs per Section</h2>
+      
+      <div class="sections-container">
+        <!-- Section 1 Table -->
+        <div class="section-box">
+          <h3>Grade 7 - Section 1</h3>
+          <table>
+            <thead>
+              <tr><th>Name</th><th>Time In</th><th>Status</th></tr>
+            </thead>
+            <tbody id="logs-section-1"></tbody>
+          </table>
+        </div>
+
+        <!-- Section 2 Table -->
+        <div class="section-box">
+          <h3>Grade 7 - Section 2</h3>
+          <table>
+            <thead>
+              <tr><th>Name</th><th>Time In</th><th>Status</th></tr>
+            </thead>
+            <tbody id="logs-section-2"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
