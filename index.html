@@ -8,6 +8,7 @@
   <!-- Libraries for QR & Face Recognition -->
   <script src="https://unpkg.com/html5-qrcode"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
 </head>
 <body>
 
@@ -28,6 +29,14 @@
       <video id="video" autoplay muted style="display:none; width:100%; border-radius:8px;"></video>
       
       <div id="statusMessage" class="status-box">Loading system...</div>
+    </section>
+    
+    <!-- QR Generator Card -->
+    <section class="scanner-card" style="margin-top: 15px;">
+      <h2>Generate Student ID QR</h2>
+      <select id="studentSelect" style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ccc;"></select>
+      <button onclick="generateQRCode()" style="width:100%; padding:10px; background:#28a745; color:white; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">Generate QR Code</button>
+      <div id="qrcode" style="margin-top:20px; display:flex; justify-content:center;"></div>
     </section>
 
     <!-- Section Attendance Logs -->
