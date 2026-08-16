@@ -31,12 +31,14 @@
       <div id="statusMessage" class="status-box">Loading system...</div>
     </section>
     
-    <!-- QR Generator Card -->
+      <!-- QR Generator Card -->
     <section class="scanner-card" style="margin-top: 15px;">
       <h2>Generate Student ID QR</h2>
       <select id="studentSelect" style="width:100%; padding:10px; margin-bottom:10px; border-radius:5px; border:1px solid #ccc;"></select>
       <button onclick="generateQRCode()" style="width:100%; padding:10px; background:#28a745; color:white; border:none; border-radius:5px; font-weight:bold; cursor:pointer;">Generate QR Code</button>
-      <div id="qrcode" style="margin-top:20px; display:flex; justify-content:center;"></div>
+      <div style="text-align:center; margin-top:15px;">
+        <img id="qrImage" src="" style="display:none; margin: 0 auto; border: 1px solid #ddd; padding: 5px; border-radius: 5px; width: 180px; height: 180px;" alt="QR Code">
+      </div>
     </section>
 
     <!-- Section Attendance Logs -->
