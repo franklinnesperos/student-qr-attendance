@@ -3,48 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student QR Attendance & Auto-Sorter</title>
+  <title>Student Attendance & Face Recognition</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Libraries for QR & Face Recognition -->
   <script src="https://unpkg.com/html5-qrcode"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
 </head>
 <body>
 
   <header>
     <h1>School Attendance Gateway</h1>
-    <p>Live QR Scanner & Auto-Section Sorting System</p>
+    <p>QR Scanner & Face Recognition Auto-Sorting System</p>
   </header>
 
   <main class="container">
-    <!-- Scanner Section -->
+    <!-- Scanner Card -->
     <section class="scanner-card">
-      <h2>Scan Student ID</h2>
+      <div class="mode-toggle">
+        <button id="btnQR" onclick="setMode('QR')" class="active-btn">📷 QR Scan</button>
+        <button id="btnFace" onclick="setMode('FACE')">👤 Face Scan</button>
+      </div>
+
       <div id="reader"></div>
-      <div id="statusMessage" class="status-box">Ready to scan...</div>
+      <video id="video" autoplay muted style="display:none; width:100%; border-radius:8px;"></video>
+      
+      <div id="statusMessage" class="status-box">Loading system...</div>
     </section>
 
-    <!-- Sorted Attendance Tables -->
+    <!-- Section Attendance Logs -->
     <section class="dashboard-card">
-      <h2>Live Attendance Logs per Section</h2>
+      <h2>Live Attendance Logs</h2>
       
       <div class="sections-container">
-        <!-- Section 1 Table -->
         <div class="section-box">
           <h3>Grade 7 - Section 1</h3>
           <table>
-            <thead>
-              <tr><th>Name</th><th>Time In</th><th>Status</th></tr>
-            </thead>
+            <thead><tr><th>Name</th><th>Time</th><th>Method</th></tr></thead>
             <tbody id="logs-section-1"></tbody>
           </table>
         </div>
 
-        <!-- Section 2 Table -->
         <div class="section-box">
           <h3>Grade 7 - Section 2</h3>
           <table>
-            <thead>
-              <tr><th>Name</th><th>Time In</th><th>Status</th></tr>
-            </thead>
+            <thead><tr><th>Name</th><th>Time</th><th>Method</th></tr></thead>
             <tbody id="logs-section-2"></tbody>
           </table>
         </div>
