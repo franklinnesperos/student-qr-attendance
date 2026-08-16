@@ -66,3 +66,26 @@ function registerAttendance(student, method) {
 
 // Start default mode
 startQRScanner();
+
+// Populate dropdown list para sa QR Generator
+const select = document.getElementById("studentSelect");
+masterlist.forEach(student => {
+  let option = document.createElement("option");
+  option.value = student.id;
+  option.text = `${student.name} (${student.section})`;
+  select.appendChild(option);
+});
+
+// Function para mag-generate ng QR Code
+function generateQRCode() {
+  const qrDiv = document.getElementById("qrcode");
+  qrDiv.innerHTML = ""; // Lilinisin ang lumang QR
+  
+  const selectedID = document.getElementById("studentSelect").value;
+  
+  new QRCode(qrDiv, {
+    text: selectedID,
+    width: 200,
+    height: 200
+  });
+}
