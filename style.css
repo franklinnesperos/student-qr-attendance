@@ -2,45 +2,52 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f4f6f9;
   margin: 0;
-  padding: 20px;
+  padding: 15px;
 }
 
 header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+}
+
+header h1 {
+  font-size: 1.5rem;
+  margin-bottom: 5px;
 }
 
 .container {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   max-width: 1200px;
   margin: 0 auto;
 }
 
 .scanner-card, .dashboard-card {
   background: #ffffff;
-  padding: 20px;
+  padding: 15px;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 #reader {
   width: 100%;
+  min-height: 250px;
 }
 
 .status-box {
-  margin-top: 15px;
-  padding: 10px;
+  margin-top: 10px;
+  padding: 8px;
   background: #e9ecef;
   border-radius: 5px;
   font-weight: bold;
   text-align: center;
+  font-size: 0.9rem;
 }
 
 .sections-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 15px;
 }
 
@@ -48,6 +55,7 @@ header {
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
+  overflow-x: auto;
 }
 
 table {
@@ -60,9 +68,20 @@ th, td {
   border-bottom: 1px solid #eee;
   padding: 8px;
   text-align: left;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 th {
   background-color: #f8f9fa;
+}
+
+@media (min-width: 768px) {
+  .container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+  }
+  .sections-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }
