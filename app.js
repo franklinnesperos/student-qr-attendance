@@ -67,25 +67,28 @@ function registerAttendance(student, method) {
 // Start default mode
 startQRScanner();
 
-// Populate dropdown list para sa QR Generator
-const select = document.getElementById("studentSelect");
-masterlist.forEach(student => {
-  let option = document.createElement("option");
-  option.value = student.id;
-  option.text = `${student.name} (${student.section})`;
-  select.appendChild(option);
-});
-
-// Function para mag-generate ng QR Code
-function generateQRCode() {
-  const qrDiv = document.getElementById("qrcode");
-  qrDiv.innerHTML = ""; // Lilinisin ang lumang QR
-  
-  const selectedID = document.getElementById("studentSelect").value;
-  
-  new QRCode(qrDiv, {
-    text: selectedID,
-    width: 200,
-    height: 200
+// Populate dropdown list
+function populateDropdown() {
+  const select = document.getElementById("studentSelect");
+  if (!select) return;
+  select.innerHTML = "";
+  masterlist.forEach(student => {
+    let option = document.createElement("option");
+    option.value = student.id;
+    option.text = `${student.name} (${student.section})`;
+    select.appendChild(option);
   });
 }
+
+// Generate QR Image directly
+function generateQRCode() {
+  const selectedID = document.getElementById("studentSelect").value;
+  const qrImg = document.getElementById("qrImage");
+  if (selectedID && qrImg) {
+    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${selectedID}`;
+    qrImg.style.display = "block";
+  }
+}
+
+// Load dropdown on start
+populateDropdown();
