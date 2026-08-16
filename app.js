@@ -1,55 +1,68 @@
-// Sample Masterlist Database
 const masterlist = [
-  { id: "STU-001", name: "Juan Dela Cruz", section: "Section 1", phone: "09123456789" },
-  { id: "STU-002", name: "Maria Santos", section: "Section 2", phone: "09987654321" },
-  { id: "STU-003", name: "Pedro Penduko", section: "Section 1", phone: "09112223334" },
-  { id: "STU-004", name: "Ana Reyes", section: "Section 2", phone: "09556667778" }
+  { id: "STU-001", name: "Juan Dela Cruz", section: "Section 1", photo: "https://i.imgur.com/7vU3k3X.jpg" },
+  { id: "STU-002", name: "Maria Santos", section: "Section 2", photo: "https://i.imgur.com/2D5a7eD.jpg" }
 ];
 
 const scannedIDs = new Set();
+let currentMode = "QR";
+let qrScanner;
+
+// Initialize QR Scanner
+function startQRScanner() {
+  document.getElementById("reader").style.display = "block";
+  document.getElementById("video").style.display = "none";
+  
+  if (!qrScanner) {
+    qrScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 220 });
+    qrScanner.render(onScanSuccess);
+  }
+  document.getElementById("statusMessage").innerText = "Ready to scan QR Code...";
+}
+
+// Mode Switcher
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById("btnQR").classList.toggle("active-btn", mode === 'QR');
+  document.getElementById("btnFace").classList.toggle("active-btn", mode === 'FACE');
+
+  if (mode === "QR") {
+    startQRScanner();
+  } else {
+    document.getElementById("reader").style.display = "none";
+    document.getElementById("video").style.display = "block";
+    document.getElementById("statusMessage").innerText = "Face Recognition Mode Selected.";
+  }
+}
 
 function onScanSuccess(decodedText) {
   const student = masterlist.find(s => s.id === decodedText);
+  if (student) registerAttendance(student, "QR Code");
+}
+
+function registerAttendance(student, method) {
   const statusBox = document.getElementById('statusMessage');
 
-  if (!student) {
-    statusBox.innerText = `❌ ID not found: ${decodedText}`;
-    statusBox.style.color = "red";
-    return;
-  }
-
   if (scannedIDs.has(student.id)) {
-    statusBox.innerText = `⚠️ ${student.name} is already scanned.`;
+    statusBox.innerText = `⚠️ ${student.name} is already logged.`;
     statusBox.style.color = "orange";
     return;
   }
 
   scannedIDs.add(student.id);
   const timeIn = new Date().toLocaleTimeString();
+  const targetTable = student.section === "Section 1" ? "logs-section-1" : "logs-section-2";
 
-  // Auto-Sort to respective table
-  const targetTableId = student.section === "Section 1" ? "logs-section-1" : "logs-section-2";
-  const tableBody = document.getElementById(targetTableId);
-
-  const newRow = `
+  document.getElementById(targetTable).innerHTML += `
     <tr>
       <td><b>${student.name}</b></td>
       <td>${timeIn}</td>
-      <td><span style="color:green;">Present</span></td>
+      <td><small>${method}</small></td>
     </tr>
   `;
-  tableBody.innerHTML += newRow;
 
-  statusBox.innerText = `✅ ${student.name} scanned -> Sorted to ${student.section}`;
+  statusBox.innerText = `✅ [${method}] ${student.name} -> Sorted to ${student.section}`;
   statusBox.style.color = "green";
-
-  // Trigger SMS Alert Logic Here
-  sendParentSMS(student.name, student.phone, timeIn);
 }
 
-function sendParentSMS(name, phone, time) {
-  console.log(`[SMS Gateway Triggered] Sent to ${phone}: ${name} arrived at ${time}.`);
-}
-
-let html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
-html5QrcodeScanner.render(onScanSuccess);
+// Start default mode
+startQRScanner();
